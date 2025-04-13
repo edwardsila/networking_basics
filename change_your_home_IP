@@ -4,13 +4,13 @@
 
 FILE="/etc/hosts"
 
-if [ "$EUID" -ne 0]; then
+if [ "$EUID" -ne 0 ]; then
 	echo "Please run script as root (use sudo)"
 	exit 1
 fi
 
 # BAckup original host file
-cp "FILE" "${FILE}.bak"
+cp "$FILE" "${FILE}.bak"
 echo "backup of host file created at ${FILE}.bak"
 
 if grep -q "127.0.0.2 localhost" "$FILE"; then
