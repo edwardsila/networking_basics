@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+#This scripts configures your /etc/hosts file
+
+FILE="/etc/hosts"
+
+if [ "$EUID" -ne 0]; then
+	echo "Please run script as root (use sudo)"
+	exit 1
+fi
+
+# BAckup original host file
+cp "FILE" "${FILE}.bak"
+echo "backup of host file created at ${FILE}.bak"
+
+if grep -q "127.0.0.2 localhost" "$FILE"; then
+	echo "localhost already resolved to 127.0.0.2"
+else
+	echo "127.0.0.2 localhost" >> "$FILE"
+	echo "added localhost resolution to 127.0.0.2"
+fi
